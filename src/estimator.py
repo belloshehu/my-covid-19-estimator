@@ -35,38 +35,38 @@ def challenge1_soluton(data):
 def challenge2_soluton(data):
     # determing the 15% of InfectionsByRequestedTime for impact and severeImpact
     output_data_after_challenge1 = challenge1_soluton(data)
-    impact_severe_cases_requested_time = output_data_after_challenge1["impact"]["infectionsByRequestedTime"]*0.15
-    severe_Impact_severe_cases_requested_time = output_data_after_challenge1["severeImpact"]["infectionsByRequestedTime"]*0.15
-    output_data_after_challenge1["impact"]["severeCasesByRequestedTime"] = int(impact_severe_cases_requested_time)
-    output_data_after_challenge1["severeImpact"]["severeCasesByRequestedTime"] = int(severe_Impact_severe_cases_requested_time)
+    impact_severe_cases_requested_time = int(output_data_after_challenge1["impact"]["infectionsByRequestedTime"]*0.15)
+    severe_Impact_severe_cases_requested_time = int(output_data_after_challenge1["severeImpact"]["infectionsByRequestedTime"]*0.15)
+    output_data_after_challenge1["impact"]["severeCasesByRequestedTime"] = impact_severe_cases_requested_time
+    output_data_after_challenge1["severeImpact"]["severeCasesByRequestedTime"] = severe_Impact_severe_cases_requested_time
     
     #Determining the number of available beds
-    impact_hospital_beds_by_requested_time = data["totalHospitalBeds"]*0.35 - impact_severe_cases_requested_time
-    severe_Impact_hospital_beds_by_requested_time = data["totalHospitalBeds"]*0.35 - severe_Impact_severe_cases_requested_time
-    output_data_after_challenge1["impact"]["hospitalBedsByRequestedTime"] = int(impact_hospital_beds_by_requested_time)
-    output_data_after_challenge1["severeImpact"]["hospitalBedsByRequestedTime"] = int(severe_Impact_hospital_beds_by_requested_time)
+    impact_hospital_beds_by_requested_time = int(data["totalHospitalBeds"]*0.35 - impact_severe_cases_requested_time)
+    severe_Impact_hospital_beds_by_requested_time = int(data["totalHospitalBeds"]*0.35 - severe_Impact_severe_cases_requested_time)
+    output_data_after_challenge1["impact"]["hospitalBedsByRequestedTime"] = impact_hospital_beds_by_requested_time
+    output_data_after_challenge1["severeImpact"]["hospitalBedsByRequestedTime"] = severe_Impact_hospital_beds_by_requested_time
     output_data = output_data_after_challenge1
     return output_data
 
 def challenge3_soluton(data):
     output_data_after_challenge2 = challenge2_soluton(data)
     #Determining casesForICURequestedByTime
-    impact_cases_for_icu_by_requested_time = output_data_after_challenge2["impact"]["infectionsByRequestedTime"]*0.05
-    severe_Impact_cases_for_icu_by_requested_time = output_data_after_challenge2["severeImpact"]["infectionsByRequestedTime"]*0.05
-    output_data_after_challenge2["impact"]["casesForICUByRequestedTime"] = round(impact_cases_for_icu_by_requested_time)
-    output_data_after_challenge2["severeImpact"]["casesForICUByRequestedTime"] = round(severe_Impact_cases_for_icu_by_requested_time)
+    impact_cases_for_icu_by_requested_time = int(output_data_after_challenge2["impact"]["infectionsByRequestedTime"]*0.05)
+    severe_Impact_cases_for_icu_by_requested_time = int(output_data_after_challenge2["severeImpact"]["infectionsByRequestedTime"]*0.05)
+    output_data_after_challenge2["impact"]["casesForICUByRequestedTime"] = impact_cases_for_icu_by_requested_time
+    output_data_after_challenge2["severeImpact"]["casesForICUByRequestedTime"] = severe_Impact_cases_for_icu_by_requested_time
 
     #Determining casesForVentilatorsByRequestedTime
-    impact_cases_for_ventilators_by_requested_time = output_data_after_challenge2["impact"]["infectionsByRequestedTime"]*0.02
-    severe_Impact_cases_for_ventilators_by_requested_time = output_data_after_challenge2["severeImpact"]["infectionsByRequestedTime"]*0.02
-    output_data_after_challenge2["impact"]["casesForVentilatorsByRequestedTime"] = round(impact_cases_for_ventilators_by_requested_time)
-    output_data_after_challenge2["severeImpact"]["casesForVentilatorsByRequestedTime"] = round(severe_Impact_cases_for_ventilators_by_requested_time)
+    impact_cases_for_ventilators_by_requested_time = int(output_data_after_challenge2["impact"]["infectionsByRequestedTime"]*0.02)
+    severe_Impact_cases_for_ventilators_by_requested_time = int(output_data_after_challenge2["severeImpact"]["infectionsByRequestedTime"]*0.02)
+    output_data_after_challenge2["impact"]["casesForVentilatorsByRequestedTime"] = impact_cases_for_ventilators_by_requested_time
+    output_data_after_challenge2["severeImpact"]["casesForVentilatorsByRequestedTime"] = severe_Impact_cases_for_ventilators_by_requested_time
 
     #Determining dollarsInFlight
-    impact_dollars_in_flight = output_data_after_challenge2["impact"]["infectionsByRequestedTime"]*data["region"]["avgDailyIncomeInUSD"]*data["timeToElapse"]
-    severe_Impact_dollars_in_flight = output_data_after_challenge2["severeImpact"]["infectionsByRequestedTime"]*data["region"]["avgDailyIncomeInUSD"]*data["timeToElapse"]
-    output_data_after_challenge2["impact"]["dollarsInFlight"] = round(impact_dollars_in_flight,2)
-    output_data_after_challenge2["severeImpact"]["dollarsInFlight"] = round(severe_Impact_dollars_in_flight)
+    impact_dollars_in_flight = int(output_data_after_challenge2["impact"]["infectionsByRequestedTime"]*data["region"]["avgDailyIncomeInUSD"]*get_duration(duration))
+    severe_Impact_dollars_in_flight = int(output_data_after_challenge2["severeImpact"]["infectionsByRequestedTime"]*data["region"]["avgDailyIncomeInUSD"]/get_duration(data))
+    output_data_after_challenge2["impact"]["dollarsInFlight"] = impact_dollars_in_flight
+    output_data_after_challenge2["severeImpact"]["dollarsInFlight"] = severe_Impact_dollars_in_flight
 
 def estimator(data):
 
@@ -81,4 +81,3 @@ def estimator(data):
 
   return json.dumps(output_data, indent=2)
 
-print(estimator(data))
