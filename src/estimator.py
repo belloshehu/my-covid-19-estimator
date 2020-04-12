@@ -84,13 +84,15 @@ def estimator(data):
   return output_data
 
 @app.route("/api/v1/on-covid-19", methods=["GET"])
-def defualt_api():
-    return jsonify(estimator(data))
+def default_api():
+  print(request.method)
+  return jsonify(estimator(data))
 
-@app.route("/", methods=["POST", "GET"])
-def index():
-    return ("Hello")
+@app.route("/api/v1/on-covid-19/xml", methods=["GET"])
+def json_api():
+  print(request.method)
+  return jsonify(estimator(data))
 
 if __name__=="__main__":
-    app.run(debug=True)
+  app.run(debug=True)
 
