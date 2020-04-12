@@ -14,6 +14,12 @@ def estimator(data):
   impact_infections_by_requested_time = impact_currently_infected*((28//3)**2)
   severe_infections_by_requested_time = severe_currently_infected*((28//3)**2)
 
+  #challenge 2
+  impact_severe_cases_by_requested_time = impact_infections_by_requested_time*0.15
+  severe_severe_cases_by_requested_time = severe_infections_by_requested_time*0.15
+
+  impact_hospitals_beds_by_requested_time = data["totalHospitalBeds"]*0.35-impact_severe_cases_by_requested_time
+  severe_hospitals_beds_by_requested_time = data["totalHospitalBeds"]*0.35-severe_severe_cases_by_requested_time
 
   output_data = {
     "data": data,
