@@ -27,4 +27,4 @@ def estimator(data):
     }
   }
 
-  return output_data
+  return json.dumps(output_data, indent=2)
