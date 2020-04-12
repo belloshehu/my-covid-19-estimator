@@ -53,14 +53,14 @@ def challenge3_soluton(data):
     #Determining casesForICURequestedByTime
     impact_cases_for_icu_by_requested_time = output_data_after_challenge2["impact"]["infectionsByRequestedTime"]*0.05
     severe_Impact_cases_for_icu_by_requested_time = output_data_after_challenge2["severeImpact"]["infectionsByRequestedTime"]*0.05
-    output_data_after_challenge2["impact"]["casesForICUByRequestedTime"] = impact_cases_for_icu_by_requested_time
-    output_data_after_challenge2["severe"]["casesForICUByRequestedTime"] = severe_Impact_cases_for_icu_by_requested_time
+    output_data_after_challenge2["impact"]["casesForICUByRequestedTime"] = round(impact_cases_for_icu_by_requested_time)
+    output_data_after_challenge2["severeImpact"]["casesForICUByRequestedTime"] = round(severe_Impact_cases_for_icu_by_requested_time)
 
     #Determining casesForVentilatorsByRequestedTime
     impact_cases_for_ventilators_by_requested_time = output_data_after_challenge2["impact"]["infectionsByRequestedTime"]*0.02
     severe_Impact_cases_for_ventilators_by_requested_time = output_data_after_challenge2["severeImpact"]["infectionsByRequestedTime"]*0.02
-    output_data_after_challenge2["impact"]["casesForVentilatorsByRequestedTime"] = impact_cases_for_ventilators_by_requested_time
-    output_data_after_challenge2["severeImpact"]["casesForVentilatorsByRequestedTime"] = severeImpact_cases_for_ventilators_by_requested_time
+    output_data_after_challenge2["impact"]["casesForVentilatorsByRequestedTime"] = round(impact_cases_for_ventilators_by_requested_time)
+    output_data_after_challenge2["severeImpact"]["casesForVentilatorsByRequestedTime"] = round(severe_Impact_cases_for_ventilators_by_requested_time)
 
     #Determining dollarsInFlight
     impact_dollars_in_flight = output_data_after_challenge2["impact"]["infectionsByRequestedTime"]*data["region"]["avgDailyIncomeInUSD"]*data["timeToElapse"]
@@ -74,11 +74,11 @@ def estimator(data):
   challenge1_soluton(data)
   
   #challenge 2
-  result =challenge2_soluton(data)
+  challenge2_soluton(data)
 
-  return json.dumps(result, indent=2)
+  #challenge 3
+  challenge3_soluton(data)
 
+  return json.dumps(output_data, indent=2)
 
 print(estimator(data))
-
-print(round(2.339, 2))
