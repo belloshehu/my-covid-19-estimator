@@ -1,6 +1,8 @@
 import  json
 from data import data
+from flask import Flask, jsonify, request
 
+app = Flask(__name__)
 output_data = {
     "data":data,
     "impact":{},
@@ -63,7 +65,7 @@ def challenge3_soluton(data):
     output_data_after_challenge2["severeImpact"]["casesForVentilatorsByRequestedTime"] = severe_Impact_cases_for_ventilators_by_requested_time
 
     #Determining dollarsInFlight
-    impact_dollars_in_flight = int(output_data_after_challenge2["impact"]["infectionsByRequestedTime"]*data["region"]["avgDailyIncomeInUSD"]*get_duration(duration))
+    impact_dollars_in_flight = int(output_data_after_challenge2["impact"]["infectionsByRequestedTime"]*data["region"]["avgDailyIncomeInUSD"]*get_duration(data))
     severe_Impact_dollars_in_flight = int(output_data_after_challenge2["severeImpact"]["infectionsByRequestedTime"]*data["region"]["avgDailyIncomeInUSD"]/get_duration(data))
     output_data_after_challenge2["impact"]["dollarsInFlight"] = impact_dollars_in_flight
     output_data_after_challenge2["severeImpact"]["dollarsInFlight"] = severe_Impact_dollars_in_flight
@@ -79,5 +81,16 @@ def estimator(data):
   #challenge 3
   challenge3_soluton(data)
 
-  return json.dumps(output_data, indent=2)
+  return output_data
+
+@app.route("/api/v1/on-covid-19", methods=["GET"])
+def defualt_api():
+    return jsonify(estimator(data))
+
+@app.route("/", methods=["POST", "GET"])
+def index():
+    return ("Hello")
+
+if __name__=="__main__":
+    app.run(debug=True)
 
