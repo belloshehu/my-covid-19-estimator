@@ -28,4 +28,3 @@ def estimator(data):
   }
 
   return output_data
-print(estimator(data))
