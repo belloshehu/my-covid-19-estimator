@@ -78,32 +78,31 @@ def challenge3_soluton(data):
 
 def estimator(data):
 
-  #challenge 1
-  challenge1_soluton(data)
-  
-  #challenge 2
-  challenge2_soluton(data)
+    #challenge 1
+    challenge1_soluton(data)
+    
+    #challenge 2
+    challenge2_soluton(data)
 
-  #challenge 3
-  challenge3_soluton(data)
+    #challenge 3
+    challenge3_soluton(data)
 
-  return output_data
+    return output_data
 
 @app.route("/api/v1/on-covid-19", methods=["GET"])
 def default_api():
-  return jsonify(estimator(data))
+    return jsonify(estimator(data))
 
 @app.route("/api/v1/on-covid-19/json", methods=["GET"])
 def json_api():
-  log_request_response(request.method,"/api/v1/on-covid-19/json",200, 20)
-  return jsonify(estimator(data))
+    log_request_response(request.method,"/api/v1/on-covid-19/json",200, 20)
+    return jsonify(estimator(data))
 
 @app.route("/api/v1/on-covid-19/xml", methods=["GET"])
 def xml_api():
+    xml =dicttoxml(estimator(data))
+    return xml
   
-  xml =dicttoxml(estimator(data))
-  return xml
-
 if __name__=="__main__":
-  app.run(debug=True)
+    app.run(debug=True)
 
